@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "antcompress"
+version = "0.3.0"
+description = "🐜 Ant — High-ratio lossless compressor + Agent Mode that saves 70–90% AI tokens on code repos"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Ayobami Oluwaseunfunmi"}]
+keywords = ["compression", "lzma", "ai", "agent", "cursor", "aider", "token-saving"]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: System :: Archiving :: Compression",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.optional-dependencies]
+agent = ["tiktoken>=0.8.0"]
+
+[project.scripts]
+ant = "antcompress.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Ayobami-Oluwaseunfunmi/antcompress"
+Repository = "https://github.com/Ayobami-Oluwaseunfunmi/antcompress"
