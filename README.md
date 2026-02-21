@@ -2,6 +2,8 @@
 
 **High-ratio lossless compressor + Agent Mode** that saves **70–90% tokens** when feeding repos to AI coding tools.
 
+[GitHub Repository](https://github.com/Okediya/antcompress)
+
 ```bash
 pip install antcompress[agent]
 ```
