@@ -26,5 +26,5 @@ agent = ["tiktoken>=0.8.0"]
 ant = "antcompress.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/Ayobami-Oluwaseunfunmi/antcompress"
-Repository = "https://github.com/Ayobami-Oluwaseunfunmi/antcompress"
+Homepage = "https://github.com/Okediya/antcompress"
+Repository = "https://github.com/Okediya/antcompress"
