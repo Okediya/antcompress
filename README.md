@@ -1,4 +1,5 @@
 # 🐜 Ant v0.3.0
+[![PyPI - Version](https://img.shields.io/pypi/v/antcompress)](https://pypi.org/project/antcompress/)
 
 **High-ratio lossless compressor + Agent Mode** that saves **70–90% tokens** when feeding repos to AI coding tools.
 
