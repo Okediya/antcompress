@@ -46,8 +46,12 @@ Type `@ant-repo` in chat.
 aider --context-cmd "ant pack-ai . --format json --model claude --max-tokens 128000 --stdout"
 ```
 
+### GitHub Copilot
+Run `ant pack-ai . --stdout` and paste the output into Copilot Chat to give it full project context while staying under the token limit.
+
 ### Google Antigravity
-Add as a custom MCP tool.
+Since Antigravity can use your terminal, simply ask it to:
+*"Use Ant to pack this repo for context"* or *"Use Ant to apply changes from this edited.md file."*
 
 ---
 Made with ❤️ by Okediya Ayobami Oluwaseunfunmi
