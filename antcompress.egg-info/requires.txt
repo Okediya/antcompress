@@ -1,3 +1,0 @@
-
-[agent]
-tiktoken>=0.8.0
