@@ -12,7 +12,7 @@ from .compressor import (
 def main():
     parser = argparse.ArgumentParser(
         prog="ant",
-        description="🐜 Ant v0.3.0 — Compressor + Agent Mode (70–90% token savings)",
+        description="🐜 Ant v0.3.1 — Compressor + Agent Mode (70–90% token savings)",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     subparsers = parser.add_subparsers(dest="command", help="Commands")

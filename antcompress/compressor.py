@@ -30,7 +30,7 @@ def pack_path(path: str) -> bytes:
     with tarfile.open(fileobj=buf, mode="w") as tar:
         def filter_func(ti):
             name = ti.name.lower()
-            if any(x in name for x in [".git", "node_modules", "__pycache__", ".ant", ".ai.md"]):
+            if any(x in name for x in [".git", "node_modules", "__pycache__", ".ant", ".ai.md", "build", ".dart_tool", "dist", "egg-info"]):
                 return None
             return ti
         tar.add(path, arcname=os.path.basename(path.rstrip("/")), filter=filter_func)
