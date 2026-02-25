@@ -144,3 +144,67 @@ def unpack_ai_text(ai_text: str) -> bytes:
             info.size = len(data)
             tar.addfile(info, BytesIO(data))
     return buf.getvalue()
+
+def init_workspace(path: str) -> None:
+    folder = Path(path).resolve()
+    context_dir = folder / ".ant_context"
+    context_dir.mkdir(exist_ok=True)
+    
+    print("🐜 Initializing Antcompress workspace...")
+    
+    ignored = {".git", "node_modules", "__pycache__", ".ant_context", "venv", "env", ".venv", "build", ".dart_tool", "dist", "egg-info", ".idea", ".vscode"}
+    
+    def is_ignored(p: Path) -> bool:
+        for part in p.parts:
+            if part in ignored or part.endswith(".egg-info"):
+                return True
+        return False
+
+    print("📦 Replicating directory tree into .ant_context/ ...")
+    count = 0
+    for file_path in folder.rglob("*"):
+        if file_path.is_file():
+            rel_path = file_path.relative_to(folder)
+            if is_ignored(rel_path):
+                continue
+            
+            # Replicate the exact directory structure, append .ai.md to the filename
+            out_file = context_dir / rel_path.with_name(rel_path.name + ".ai.md")
+            out_file.parent.mkdir(parents=True, exist_ok=True)
+            
+            try:
+                content = file_path.read_text(encoding="utf-8", errors="ignore")
+                compressed = apply_dictionary(content.encode("utf-8"), "any").decode("utf-8", errors="ignore")
+                ext = file_path.suffix[1:] or "txt"
+                md_content = f"### {rel_path}\n```{ext}\n{compressed}\n```\n"
+                out_file.write_text(md_content, encoding="utf-8")
+                count += 1
+            except Exception:
+                pass
+                
+    print(f"✅ Packed {count} files into individual AI contexts!")
+    
+    # Create IDE rules
+    rule_content = """# Antcompress AI Agent Instructions
+
+To save tokens massively, when you need to explore or read code in this repository, DO NOT read the raw source files directly. 
+Instead, read the corresponding pre-packed Agent Mode files in the `.ant_context/` directory (e.g., read `.ant_context/src.ai.md` instead of the `src/` folder files).
+If a directory's compressed file is outdated, run `ant pack-ai <directory>` to update it, or `ant pack-ai . --stdout` to view the whole repo.
+"""
+    
+    try:
+        (folder / ".cursorrules").write_text(rule_content, encoding="utf-8")
+        (folder / ".windsurfrules").write_text(rule_content, encoding="utf-8")
+        
+        github_dir = folder / ".github"
+        github_dir.mkdir(exist_ok=True)
+        (github_dir / "copilot-instructions.md").write_text(rule_content, encoding="utf-8")
+        
+        agents_dir = folder / ".agents" / "workflows"
+        agents_dir.mkdir(parents=True, exist_ok=True)
+        workflow_content = f"---\ndescription: How to use Antcompress\n---\n{rule_content}"
+        (agents_dir / "antcompress.md").write_text(workflow_content, encoding="utf-8")
+    except Exception as e:
+        print(f"⚠️ Could not create all IDE rule files: {e}")
+    
+    print(f"✅ Workspace initialized! IDE rules created and context saved to .ant_context/")

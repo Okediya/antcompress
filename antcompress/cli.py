@@ -6,13 +6,13 @@ from io import BytesIO
 from pathlib import Path
 from .compressor import (
     ant_compress, ant_decompress, pack_path,
-    pack_ai_agent, unpack_ai_text
+    pack_ai_agent, unpack_ai_text, init_workspace
 )
 
 def main():
     parser = argparse.ArgumentParser(
         prog="ant",
-        description="🐜 Ant v0.3.1 — Compressor + Agent Mode (70–90% token savings)",
+        description="🐜 Ant v0.4.0 — Compressor + Agent Mode (70–90% token savings)",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     subparsers = parser.add_subparsers(dest="command", help="Commands")
@@ -36,6 +36,10 @@ def main():
     # unpack-ai
     unpack = subparsers.add_parser("unpack-ai", help="Turn AI-edited .md back into .ant")
     unpack.add_argument("path", type=Path)
+    
+    # init
+    init_cmd = subparsers.add_parser("init", help="Initialize workspace with IDE rules and compressed context (.ant_context)")
+    init_cmd.add_argument("path", nargs="?", type=Path, default=Path("."))
 
     args = parser.parse_args()
     if not args.command:
@@ -91,6 +95,9 @@ def main():
         out = Path("updated-" + str(args.path).replace(".ai.md", "").replace(".md", "") + ".ant")
         out.write_bytes(compressed)
         print(f"✅ New compressed .ant created: {out}")
+        
+    elif args.command == "init":
+        init_workspace(str(args.path))
 
 if __name__ == "__main__":
     main()

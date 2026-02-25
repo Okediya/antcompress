@@ -1,4 +1,4 @@
-# 🐜 Ant v0.3.0
+# 🐜 Ant v0.4.0
 [![PyPI - Version](https://img.shields.io/pypi/v/antcompress)](https://pypi.org/project/antcompress/)
 
 **High-ratio lossless compressor + Agent Mode** that saves **70–90% tokens** when feeding repos to AI coding tools.
@@ -10,6 +10,7 @@ pip install antcompress[agent]
 ```
 
 ## Commands
+- `ant init [path]` → Generates an `.ant_context/` tree replica for efficient IDE exploration + agent rules.
 - `ant compress <path>` → tiny .ant file (95–99% smaller)
 - `ant decompress <file.ant>` → restore exact original
 - `ant pack-ai <folder>` → Agent Mode (JSON for IDEs or MD for phone)
